@@ -8,42 +8,40 @@ import dao.DaoGeneric;
 import model.UsuarioPessoa;
 
 public class TesteHibernate {
-	
-	
+
 	@Test
 	public void testeHibernteUtil() {
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-		
+
 		UsuarioPessoa pessoa = new UsuarioPessoa();
 		pessoa.setIdade(3);
-		pessoa.setLogin("Maxo");
-		pessoa.setSenha("max");
-		pessoa.setNome("max");
-		pessoa.setSobrenome("caet");
-		pessoa.setEmail("max@g.co");
-		
+		pessoa.setNome("c");
+		pessoa.setSobrenome("c");
+		pessoa.setLogin("c");
+		pessoa.setSenha("c");
+		pessoa.setEmail("c@g.co");
+
 		daoGeneric.salvar(pessoa);
 		System.out.println(pessoa);
 	}
-	
+
 	@Test
 	public void testeBuscar() {
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
 		UsuarioPessoa pessoa = new UsuarioPessoa();
 		pessoa.setId(3L);
-		
+
 		pessoa = daoGeneric.pesquisar(pessoa);
-		
+
 		System.out.println(pessoa);
 	}
-	
+
 	@Test
 	public void testeBuscar2() {
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-		
+
 		UsuarioPessoa pessoa = daoGeneric.pesquisar(3L, UsuarioPessoa.class);
-		
-		
+
 		System.out.println(pessoa);
 	}
 
@@ -54,28 +52,28 @@ public class TesteHibernate {
 		pessoa.setIdade(94);
 		pessoa.setNome("name");
 		pessoa.setSenha("96");
-		
+
 		pessoa = daoGeneric.updateMerge(pessoa);
-		
+
 		System.out.println(pessoa);
 	}
-	
+
 	@Test
 	public void testeDelete() {
-		
+
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-		
+
 		UsuarioPessoa pessoa = daoGeneric.pesquisar(4L, UsuarioPessoa.class);
-		
+
 		daoGeneric.deletarPorId(pessoa);
-		
+
 	}
-	
+
 	@Test
 	public void testeConsultar() {
-		
+
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-		
+
 		List<UsuarioPessoa> list = daoGeneric.listar(UsuarioPessoa.class);
 
 		for (UsuarioPessoa usuarioPessoa : list) {
@@ -83,13 +81,28 @@ public class TesteHibernate {
 			System.out.println("----------------------------------");
 		}
 	}
-	
+
 	@Test
 	public void testeQuerylist() {
-		
+
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from UsuarioPessoa where nome = 'name'").getResultList();
-		
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from UsuarioPessoa where nome = 'name'")
+				.getResultList();
+
+		for (UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+			System.out.println("----------------------------------");
+		}
+
+	}
+
+	@Test
+	public void testeQuerylistMaxResult() {
+
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from UsuarioPessoa order by id")
+				.setMaxResults(7).getResultList();
+
 		for (UsuarioPessoa usuarioPessoa : list) {
 			System.out.println(usuarioPessoa);
 			System.out.println("----------------------------------");
